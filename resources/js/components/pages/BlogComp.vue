@@ -5,14 +5,10 @@
         <div class="list-group">
             <h2 class="title-content text-dark">Posts</h2>
 
-            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start"
-            v-for="post in posts" :key="post.id">
-                <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">{{post.title}}</h5>
-                <!-- <small>3 days ago</small> -->
-                </div>
-                <p class="mb-1">{{post.description}}</p>
-            </a>
+            <PostItem
+            v-for="post in posts" :key="post.id"
+            :post="post"
+            />
         </div>
 
     </div>
@@ -21,9 +17,12 @@
 
 <script>
 import Axios from 'axios';
+import PostItem from '../partials/PostItem.vue';
 
 export default {
-    name: 'BlogComp',
+    name: "BlogComp",
+
+    components: { PostItem },
 
     data() {
         return {
@@ -43,6 +42,7 @@ export default {
     mounted() {
         this.getApi();
     },
+
 }
 </script>
 

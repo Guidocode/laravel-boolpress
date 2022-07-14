@@ -29,12 +29,14 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 
 .global{
-    height: 100vh;
 
-
+    main{
+        height: calc(100vh - 56px - 50px);
+        overflow-y: scroll;
+    }
 }
 
 </style>
