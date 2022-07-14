@@ -5,16 +5,16 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <router-link class="nav-link" :to="{name: 'home'}">Home</router-link>
                     </li>
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <router-link class="nav-link" :to="{name: 'blog'}">Blog</router-link>
                     </li>
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <router-link class="nav-link" :to="{name: 'about'}">Chi siamo</router-link>
                     </li>
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <router-link class="nav-link" :to="{name: 'contacts'}">Contatti</router-link>
                     </li>
                 </ul>
@@ -32,6 +32,6 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 
 </style>

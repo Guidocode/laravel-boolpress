@@ -11,5 +11,9 @@ export default {
 </script>
 
 <style>
-
+footer{
+    color: white;
+    height: 50px;
+    background-color: black;
+}
 </style>
