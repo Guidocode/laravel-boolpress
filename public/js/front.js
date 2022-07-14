@@ -1959,21 +1959,34 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       apiUrl: "/api/posts",
-      posts: []
+      posts: null,
+      paginate: {
+        current: null,
+        last: null // prev: null,
+        // next: null
+
+      },
+      isActive: false
     };
   },
   methods: {
-    getApi: function getApi() {
+    getApi: function getApi(page) {
       var _this = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(this.apiUrl).then(function (resp) {
-        _this.posts = resp.data.posts;
-        console.log(_this.posts);
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(this.apiUrl + "?page=" + page).then(function (resp) {
+        _this.posts = resp.data.data;
+        _this.paginate = {
+          current: resp.data.current_page,
+          last: resp.data.last_page // prev: resp.data.prev_page_url,
+          // next: resp.data.next_page_url,
+
+        }; // console.log(this.paginate.prev);
+        // console.log(this.paginate.next);
       });
     }
   },
   mounted: function mounted() {
-    this.getApi();
+    this.getApi(1);
   }
 });
 
@@ -2123,9 +2136,9 @@ var render = function render() {
       _c = _vm._self._c;
 
   return _c("div", {
-    staticClass: "container p-5"
+    staticClass: "container bg-secondary p-2 my-3"
   }, [_c("div", {
-    staticClass: "list-group"
+    staticClass: "list-group mb-3"
   }, [_c("h2", {
     staticClass: "title-content text-dark"
   }, [_vm._v("Posts")]), _vm._v(" "), _vm._l(_vm.posts, function (post) {
@@ -2135,7 +2148,57 @@ var render = function render() {
         post: post
       }
     });
-  })], 2)]);
+  })], 2), _vm._v(" "), _c("nav", {
+    attrs: {
+      "aria-label": "..."
+    }
+  }, [_c("ul", {
+    staticClass: "pagination"
+  }, [_c("li", {
+    staticClass: "page-item",
+    on: {
+      click: function click($event) {
+        return _vm.getApi(_vm.paginate.current - 1);
+      }
+    }
+  }, [_c("a", {
+    staticClass: "page-link",
+    attrs: {
+      href: "#",
+      disabled: _vm.paginate.current === 1
+    }
+  }, [_vm._v("Indietro")])]), _vm._v(" "), _vm._l(_vm.paginate.last, function (p) {
+    return _c("li", {
+      key: p,
+      staticClass: "page-item",
+      "class": {
+        active: _vm.paginate.current == p
+      },
+      on: {
+        click: function click($event) {
+          return _vm.getApi(p);
+        }
+      }
+    }, [_c("a", {
+      staticClass: "page-link",
+      attrs: {
+        href: "#"
+      }
+    }, [_vm._v(_vm._s(p))])]);
+  }), _vm._v(" "), _c("li", {
+    staticClass: "page-item",
+    on: {
+      click: function click($event) {
+        return _vm.getApi(_vm.paginate.current + 1);
+      }
+    }
+  }, [_c("a", {
+    staticClass: "page-link",
+    attrs: {
+      href: "#",
+      disabled: _vm.paginate.current === _vm.paginate.last
+    }
+  }, [_vm._v("Avanti")])])], 2)])]);
 };
 
 var staticRenderFns = [];

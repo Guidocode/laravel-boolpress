@@ -13,15 +13,15 @@ class PageController extends Controller
 
     public function index(){
 
-        $posts = Post::with('category')->with('tags')->get();
+        $posts = Post::with(['category', 'tags'])->paginate(5);
 
-        $categories = Category::all();
+        // $categories = Category::all();
 
-        $data = [
-            'posts' => $posts,
-            'categories' => $categories
-        ];
+        // $data = [
+        //     'posts' => $posts,
+        //     'categories' => $categories
+        // ];
 
-        return response()->json($data);
+        return response()->json($posts);
     }
 }
