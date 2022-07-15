@@ -5,19 +5,34 @@
         <h5 class="mb-1">{{post.title}}
             <router-link class="btn btn-warning font-italic m-1 py-0 px-1" :to="{name: 'show', params: {slug: post.slug}}">vedi dettagli</router-link>
         </h5>
-        <!-- <small>3 days ago</small> -->
+        <small>{{formattingDate}}</small>
         </div>
-        <p class="mb-1">{{post.description}}</p>
+        <p class="mb-1">{{limitDescription}}</p>
     </a>
 
 </template>
 
 <script>
+import { computed } from 'vue'
 export default {
     name: 'PostItem',
 
     props:{
         post: Object
+    },
+
+    computed:{
+        limitDescription(){
+            return this.post.description.substr(0, 30) + '...';
+        },
+
+        formattingDate(){
+            const d = new Date(this.post.updated_at);
+            let date = d.toLocaleString()
+
+            return date;
+        }
+
     }
 }
 </script>

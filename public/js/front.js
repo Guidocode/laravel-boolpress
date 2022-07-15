@@ -2114,10 +2114,23 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PostItem',
   props: {
     post: Object
+  },
+  computed: {
+    limitDescription: function limitDescription() {
+      return this.post.description.substr(0, 30) + '...';
+    },
+    formattingDate: function formattingDate() {
+      var d = new Date(this.post.updated_at);
+      var date = d.toLocaleString();
+      return date;
+    }
   }
 });
 
@@ -2520,9 +2533,9 @@ var render = function render() {
         }
       }
     }
-  }, [_vm._v("vedi dettagli")])], 1)]), _vm._v(" "), _c("p", {
+  }, [_vm._v("vedi dettagli")])], 1), _vm._v(" "), _c("small", [_vm._v(_vm._s(_vm.formattingDate))])]), _vm._v(" "), _c("p", {
     staticClass: "mb-1"
-  }, [_vm._v(_vm._s(_vm.post.description))])]);
+  }, [_vm._v(_vm._s(_vm.limitDescription))])]);
 };
 
 var staticRenderFns = [];
