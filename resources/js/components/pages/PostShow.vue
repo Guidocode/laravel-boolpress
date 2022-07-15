@@ -5,7 +5,7 @@
             <img class="card-img-top" :src="post.image" :alt="post.title">
             <div class="card-body">
                 <h5 class="card-title">{{post.title}}</h5>
-                <p class="card-text">{{post.description}}}</p>
+                <p class="card-text">{{post.description}}</p>
                 <router-link class="btn btn-primary" :to="{name: 'blog'}">torna indietro</router-link>
             </div>
         </div>
@@ -14,6 +14,8 @@
 </template>
 
 <script>
+import { apiUrl } from '../../data/api-url';
+
 export default {
     name: 'PostShow',
 
@@ -21,7 +23,7 @@ export default {
         return{
             post: null,
 
-            apiUrl: '/api/posts/'
+            apiUrl
         }
     },
 
@@ -31,7 +33,7 @@ export default {
 
     methods:{
         getApi(){
-            axios.get(this.apiUrl + this.$route.params.slug)
+            axios.get(this.apiUrl + '/' + this.$route.params.slug)
             .then(resp =>{
                 this.post = resp.data
                 console.log(this.post);
