@@ -24,8 +24,8 @@
 
                     <li class="page-item"
                     @click="getApi(paginate.current - 1)">
-                        <a class="page-link" href="#"
-                        :disabled = "paginate.current === 1">Indietro</a>
+                        <button class="page-link" href="#"
+                        :disabled = "paginate.current === 1">Indietro</button>
                     </li>
 
                     <li class="page-item"
@@ -37,8 +37,8 @@
 
                     <li class="page-item"
                     @click="getApi(paginate.current + 1)">
-                        <a class="page-link" href="#"
-                        :disabled = "paginate.current === paginate.last">Avanti</a>
+                        <button class="page-link" href="#"
+                        :disabled = "paginate.current === paginate.last">Avanti</button>
                     </li>
 
                 </ul>

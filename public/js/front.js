@@ -2243,7 +2243,7 @@ var render = function render() {
         return _vm.getApi(_vm.paginate.current - 1);
       }
     }
-  }, [_c("a", {
+  }, [_c("button", {
     staticClass: "page-link",
     attrs: {
       href: "#",
@@ -2274,7 +2274,7 @@ var render = function render() {
         return _vm.getApi(_vm.paginate.current + 1);
       }
     }
-  }, [_c("a", {
+  }, [_c("button", {
     staticClass: "page-link",
     attrs: {
       href: "#",
