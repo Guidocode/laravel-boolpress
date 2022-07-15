@@ -1,44 +1,50 @@
 <template>
 
-    <div class="container bg-secondary p-2 my-3">
+    <div class="container p-2 my-3">
 
-        <div class="list-group mb-3">
-            <h2 class="title-content text-dark">Posts</h2>
-
-            <PostItem
-            v-for="post in posts" :key="post.id"
-            :post="post"
-            />
+        <div class="d-flex justify-content-center m-5" v-if="posts == null">
+            <LoadingComp />
         </div>
 
+        <div v-else>
 
-        <!-- pagination -->
-        <nav aria-label="...">
-            <ul class="pagination">
+            <div class="list-group mb-3">
+                <h2 class="title-content text-dark">Posts</h2>
 
-                <li class="page-item"
-                 @click="getApi(paginate.current - 1)">
-                    <a class="page-link" href="#"
-                    :disabled = "paginate.current === 1">Indietro</a>
-                </li>
+                <PostItem
+                v-for="post in posts" :key="post.id"
+                :post="post"
+                />
+            </div>
 
-                <li class="page-item"
-                 v-for="p in paginate.last" :key="p"
-                 @click="getApi(p)"
-                 :class="{active: paginate.current == p}">
-                    <a class="page-link" href="#">{{p}}</a>
-                </li>
 
-                <li class="page-item"
-                 @click="getApi(paginate.current + 1)">
-                    <a class="page-link" href="#"
-                    :disabled = "paginate.current === paginate.last">Avanti</a>
-                </li>
+            <!-- pagination -->
+            <nav aria-label="...">
+                <ul class="pagination">
 
-            </ul>
-        </nav>
-        <!-- /pagination -->
+                    <li class="page-item"
+                    @click="getApi(paginate.current - 1)">
+                        <a class="page-link" href="#"
+                        :disabled = "paginate.current === 1">Indietro</a>
+                    </li>
 
+                    <li class="page-item"
+                    v-for="p in paginate.last" :key="p"
+                    @click="getApi(p)"
+                    :class="{active: paginate.current == p}">
+                        <a class="page-link" href="#">{{p}}</a>
+                    </li>
+
+                    <li class="page-item"
+                    @click="getApi(paginate.current + 1)">
+                        <a class="page-link" href="#"
+                        :disabled = "paginate.current === paginate.last">Avanti</a>
+                    </li>
+
+                </ul>
+            </nav>
+            <!-- /pagination -->
+        </div>
     </div>
 
 </template>
@@ -46,11 +52,12 @@
 <script>
 import Axios from 'axios';
 import PostItem from '../partials/PostItem.vue';
+import LoadingComp from '../partials/LoadingComp.vue';
 
 export default {
     name: "BlogComp",
 
-    components: { PostItem },
+    components: { PostItem, LoadingComp },
 
     data() {
         return {
@@ -68,6 +75,7 @@ export default {
     },
     methods: {
         getApi(page) {
+            this.posts = null;
             Axios.get(this.apiUrl + "?page=" + page)
                 .then(resp => {
                 this.posts = resp.data.data;
