@@ -4,8 +4,16 @@
         <div class="card m-5" style="width: 18rem;">
             <img class="card-img-top" :src="post.image" :alt="post.title">
             <div class="card-body">
+
                 <h5 class="card-title">{{post.title}}</h5>
+
+                <h4 class="d-inline mr-2"><span class="badge bg-info text-dark">{{ post.category.name }}</span></h4>
+
+                <h6 class="d-inline"><span class="badge badge-pill badge-warning"
+                v-for="tag in post.tags" :key="tag.id">{{ tag.name }}</span></h6>
+
                 <p class="card-text">{{post.description}}</p>
+
                 <router-link class="btn btn-primary" :to="{name: 'blog'}">torna indietro</router-link>
             </div>
         </div>
@@ -21,7 +29,13 @@ export default {
 
     data(){
         return{
-            post: null,
+            post: {
+                title: '',
+                image: '',
+                description: '',
+                category: '',
+                tags: []
+            },
 
             apiUrl
         }
@@ -35,7 +49,13 @@ export default {
         getApi(){
             axios.get(this.apiUrl + '/' + this.$route.params.slug)
             .then(resp =>{
-                this.post = resp.data
+                this.post = {
+                    title: resp.data.title,
+                    image: resp.data.image,
+                    description: resp.data.description,
+                    category: resp.data.category,
+                    tags: resp.data.tags,
+                }
                 console.log(this.post);
             })
         }

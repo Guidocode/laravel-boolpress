@@ -2041,7 +2041,13 @@ __webpack_require__.r(__webpack_exports__);
   name: 'PostShow',
   data: function data() {
     return {
-      post: null,
+      post: {
+        title: '',
+        image: '',
+        description: '',
+        category: '',
+        tags: []
+      },
       apiUrl: _data_api_url__WEBPACK_IMPORTED_MODULE_0__["apiUrl"]
     };
   },
@@ -2053,7 +2059,13 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get(this.apiUrl + '/' + this.$route.params.slug).then(function (resp) {
-        _this.post = resp.data;
+        _this.post = {
+          title: resp.data.title,
+          image: resp.data.image,
+          description: resp.data.description,
+          category: resp.data.category,
+          tags: resp.data.tags
+        };
         console.log(_this.post);
       });
     }
@@ -2357,7 +2369,18 @@ var render = function render() {
     staticClass: "card-body"
   }, [_c("h5", {
     staticClass: "card-title"
-  }, [_vm._v(_vm._s(_vm.post.title))]), _vm._v(" "), _c("p", {
+  }, [_vm._v(_vm._s(_vm.post.title))]), _vm._v(" "), _c("h4", {
+    staticClass: "d-inline mr-2"
+  }, [_c("span", {
+    staticClass: "badge bg-info text-dark"
+  }, [_vm._v(_vm._s(_vm.post.category.name))])]), _vm._v(" "), _c("h6", {
+    staticClass: "d-inline"
+  }, _vm._l(_vm.post.tags, function (tag) {
+    return _c("span", {
+      key: tag.id,
+      staticClass: "badge badge-pill badge-warning"
+    }, [_vm._v(_vm._s(tag.name))]);
+  }), 0), _vm._v(" "), _c("p", {
     staticClass: "card-text"
   }, [_vm._v(_vm._s(_vm.post.description))]), _vm._v(" "), _c("router-link", {
     staticClass: "btn btn-primary",
