@@ -44,8 +44,8 @@ class PageController extends Controller
 
     public function getTagsWithPosts($slug_tag){
 
-        $tags = Tag::where('sluh', $slug_tag)->with('posts')->first();
+        $tag = Tag::where('sluh', $slug_tag)->with('posts')->first();
 
-        return response()->json($tags);
+        return response()->json($tag);
     }
 }

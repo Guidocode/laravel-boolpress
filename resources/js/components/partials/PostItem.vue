@@ -5,7 +5,15 @@
 
             <h5 class="mb-1">
                 <router-link class="btn btn-warning font-italic mb-1 py-0 px-1" :to="{name: 'show', params: {slug: post.slug}}">Vedi dettagli</router-link> <br>
-                {{post.title}}
+                {{post.title}} <br>
+                <small class="badge bg-info text-dark mr-2">
+                    {{ post.category.name }}
+                </small>
+
+                <small class="badge badge-pill badge-secondary mr-1"
+                 v-for="tag in post.tags" :key="tag.id">
+                    {{ tag.name }}
+                </small>
             </h5>
             <small>{{formattingDate}}</small>
 
@@ -41,5 +49,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.badge{
+    font-size: 10px;
+}
 </style>

@@ -1,9 +1,9 @@
 <template>
 
-    <div class="container p-2 my-3">
+    <div class="container bg-light p-2 my-3 content">
 
         <!-- Loading comp -->
-        <div class="d-flex justify-content-center m-5" v-if="posts == null">
+        <div class="d-flex justify-content-center mt-5" v-if="!posts">
             <LoadingComp />
         </div>
         <!-- Loading comp -->
@@ -18,12 +18,14 @@
                 <SideBar
                 :categories="categories"
                 :tags="tags"
+                @searchPostsByCategory="searchPostsByCategory"
+                @searchPostsByTag="searchPostsByTag"
                 />
                 <!-- SideBarComp -->
 
 
-                <div class="col-8">
-                    <div class="tab-content" id="nav-tabContent">
+                <div class="col-8 d-flex flex-column justify-content-between h-100">
+                    <div class="tab-content" id="nav-tabContent posts-list" style="height: 60%; overflow-y: scroll;">
                         <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
                             <div class="list-group mb-3">
                                 <h2 class="title-content text-dark">Posts</h2>
@@ -129,6 +131,13 @@ export default {
                 // console.log(this.paginate.prev);
                 // console.log(this.paginate.next);
             });
+        },
+
+        searchPostsByCategory(slug_category){
+            console.log(slug_category);
+        },
+        searchPostsByTag(slug_tag){
+            console.log(slug_tag);
         }
     },
     mounted() {
@@ -138,6 +147,13 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+.content{
+    height: 700px;
 
+    .posts-list{
+        height: 100px;
+        overflow-y: scroll;
+    }
+}
 </style>

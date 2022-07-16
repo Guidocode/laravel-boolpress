@@ -9,7 +9,7 @@
 
                 <h4 class="d-inline mr-2"><span class="badge bg-info text-dark">{{ post.category.name }}</span></h4>
 
-                <h6 class="d-inline"><span class="badge badge-pill badge-warning"
+                <h6 class="d-inline"><span class="badge badge-pill badge-secondary"
                 v-for="tag in post.tags" :key="tag.id">{{ tag.name }}</span></h6>
 
                 <p class="card-text">{{post.description}}</p>
