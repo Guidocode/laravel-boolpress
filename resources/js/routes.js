@@ -41,7 +41,7 @@ const router = new VueRouter({
             path: '/dettaglio-post/:slug',
             name: 'show',
             component: PostShow
-        }
+        },
     ]
 });
 

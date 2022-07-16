@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Category;
 use App\Http\Controllers\Controller;
 use App\Post;
+use App\Tag;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -15,14 +16,15 @@ class PageController extends Controller
 
         $posts = Post::orderBy('id', 'desc')->with(['category', 'tags'])->paginate(5);
 
-        // $categories = Category::all();
+        $categories = Category::all();
+        $tags = Tag::all();
 
         // $data = [
         //     'posts' => $posts,
         //     'categories' => $categories
         // ];
 
-        return response()->json($posts);
+        return response()->json(compact('posts', 'categories', 'tags'));
     }
 
     public function show($slug){
@@ -31,5 +33,19 @@ class PageController extends Controller
 
         return response()->json($post);
 
+    }
+
+    public function getCategoryWithPosts($slug_category){
+
+        $category = Category::where('sluh', $slug_category)->with('posts')->first();
+
+        return response()->json($category);
+    }
+
+    public function getTagsWithPosts($slug_tag){
+
+        $tags = Tag::where('sluh', $slug_tag)->with('posts')->first();
+
+        return response()->json($tags);
     }
 }

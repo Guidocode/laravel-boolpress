@@ -1,7 +1,7 @@
 <template>
     <div class="container d-flex justify-content-center">
 
-        <div class="card m-5" style="width: 18rem;">
+        <div class="card m-5" style="width: 30rem;">
             <img class="card-img-top" :src="post.image" :alt="post.title">
             <div class="card-body">
 

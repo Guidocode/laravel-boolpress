@@ -2,10 +2,13 @@
 
     <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
         <div class="d-flex w-100 justify-content-between">
-        <h5 class="mb-1">{{post.title}}
-            <router-link class="btn btn-warning font-italic m-1 py-0 px-1" :to="{name: 'show', params: {slug: post.slug}}">vedi dettagli</router-link>
-        </h5>
-        <small>{{formattingDate}}</small>
+
+            <h5 class="mb-1">
+                <router-link class="btn btn-warning font-italic mb-1 py-0 px-1" :to="{name: 'show', params: {slug: post.slug}}">Vedi dettagli</router-link> <br>
+                {{post.title}}
+            </h5>
+            <small>{{formattingDate}}</small>
+
         </div>
         <p class="mb-1">{{limitDescription}}</p>
     </a>
