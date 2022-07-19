@@ -25,16 +25,12 @@
 
 
                 <div class="col-8">
-                    <h2 class="title-content text-dark">Posts</h2>
+                    <h2 class="title-content text-dark">Post {{searchType}}</h2>
                     <div class="tab-content  posts-list mb-3" id="nav-tabContent">
 
-                        <div v-if="posts === [] || posts === null">
-                            <h1 class="text-danger">Nessun post presente</h1>
-                        </div>
+                        <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
 
-                        <div v-else class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
-
-                            <div class="list-group mb-3">
+                            <div v-if="posts.length != 0" class="list-group mb-3">
 
 
                                 <!-- PostItem -->
@@ -44,6 +40,11 @@
                                 />
                                 <!-- PostItem -->
 
+                            </div>
+
+                            <!-- non funziona!!! -->
+                            <div v-else>
+                                <h6 class="text-danger">Nessun post presente</h6>
                             </div>
 
                         </div>
@@ -110,13 +111,15 @@ export default {
                 current: null,
                 last: null
             },
-            showPaginate: false
+            showPaginate: false,
+            searchType: ''
 
 
         };
     },
     methods: {
         getApi(page) {
+            this.searchType = ''
             this.posts = null;
             axios.get(this.apiUrl + "?page=" + page)
                 .then(resp => {
@@ -141,7 +144,8 @@ export default {
             axios.get(this.apiUrl + '/post-category/' + slug_category)
             .then(resp => {
                 this.posts = resp.data.posts;
-                console.log(resp.data);
+                this.searchType = resp.data.name
+                console.log(resp.data.posts);
             })
         },
         searchPostsByTag(slug_tag){
@@ -151,7 +155,8 @@ export default {
             axios.get(this.apiUrl + '/post-tag/' + slug_tag)
             .then(resp => {
                 this.posts = resp.data.posts;
-                console.log(resp.data);
+                this.searchType = resp.data.name
+                console.log(resp.data.posts);
             })
         }
     },

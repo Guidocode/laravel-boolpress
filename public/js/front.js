@@ -1974,13 +1974,15 @@ __webpack_require__.r(__webpack_exports__);
         current: null,
         last: null
       },
-      showPaginate: false
+      showPaginate: false,
+      searchType: ''
     };
   },
   methods: {
     getApi: function getApi(page) {
       var _this = this;
 
+      this.searchType = '';
       this.posts = null;
       axios.get(this.apiUrl + "?page=" + page).then(function (resp) {
         _this.posts = resp.data.posts.data;
@@ -2001,7 +2003,8 @@ __webpack_require__.r(__webpack_exports__);
       console.log(slug_category);
       axios.get(this.apiUrl + '/post-category/' + slug_category).then(function (resp) {
         _this2.posts = resp.data.posts;
-        console.log(resp.data);
+        _this2.searchType = resp.data.name;
+        console.log(resp.data.posts);
       });
     },
     searchPostsByTag: function searchPostsByTag(slug_tag) {
@@ -2011,7 +2014,8 @@ __webpack_require__.r(__webpack_exports__);
       console.log(slug_tag);
       axios.get(this.apiUrl + '/post-tag/' + slug_tag).then(function (resp) {
         _this3.posts = resp.data.posts;
-        console.log(resp.data);
+        _this3.searchType = resp.data.name;
+        console.log(resp.data.posts);
       });
     }
   },
@@ -2273,21 +2277,19 @@ var render = function render() {
     staticClass: "col-8"
   }, [_c("h2", {
     staticClass: "title-content text-dark"
-  }, [_vm._v("Posts")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Post " + _vm._s(_vm.searchType))]), _vm._v(" "), _c("div", {
     staticClass: "tab-content posts-list mb-3",
     attrs: {
       id: "nav-tabContent"
     }
-  }, [_vm.posts === [] || _vm.posts === null ? _c("div", [_c("h1", {
-    staticClass: "text-danger"
-  }, [_vm._v("Nessun post presente")])]) : _c("div", {
+  }, [_c("div", {
     staticClass: "tab-pane fade show active",
     attrs: {
       id: "list-home",
       role: "tabpanel",
       "aria-labelledby": "list-home-list"
     }
-  }, [_c("div", {
+  }, [_vm.posts.length != 0 ? _c("div", {
     staticClass: "list-group mb-3"
   }, _vm._l(_vm.posts, function (post) {
     return _c("PostItem", {
@@ -2296,7 +2298,9 @@ var render = function render() {
         post: post
       }
     });
-  }), 1)])]), _vm._v(" "), _vm.showPaginate ? _c("nav", {
+  }), 1) : _c("div", [_c("h6", {
+    staticClass: "text-danger"
+  }, [_vm._v("Nessun post presente")])])])]), _vm._v(" "), _vm.showPaginate ? _c("nav", {
     attrs: {
       "aria-label": "..."
     }
