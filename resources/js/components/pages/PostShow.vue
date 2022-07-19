@@ -49,13 +49,7 @@ export default {
         getApi(){
             axios.get(this.apiUrl + '/' + this.$route.params.slug)
             .then(resp =>{
-                this.post = {
-                    title: resp.data.title,
-                    image: resp.data.image,
-                    description: resp.data.description,
-                    category: resp.data.category,
-                    tags: resp.data.tags,
-                }
+                this.post = resp.data
                 console.log(this.post);
             })
         }

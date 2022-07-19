@@ -24,11 +24,18 @@
                 <!-- SideBarComp -->
 
 
-                <div class="col-8 d-flex flex-column justify-content-between h-100">
-                    <div class="tab-content" id="nav-tabContent posts-list" style="height: 60%; overflow-y: scroll;">
-                        <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+                <div class="col-8">
+                    <h2 class="title-content text-dark">Posts</h2>
+                    <div class="tab-content  posts-list mb-3" id="nav-tabContent">
+
+                        <div v-if="posts === [] || posts === null">
+                            <h1 class="text-danger">Nessun post presente</h1>
+                        </div>
+
+                        <div v-else class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+
                             <div class="list-group mb-3">
-                                <h2 class="title-content text-dark">Posts</h2>
+
 
                                 <!-- PostItem -->
                                 <PostItem
@@ -38,15 +45,13 @@
                                 <!-- PostItem -->
 
                             </div>
+
                         </div>
-                        <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">...</div>
-                        <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">...</div>
-                        <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">...</div>
                     </div>
 
 
                     <!-- pagination -->
-                    <nav aria-label="...">
+                    <nav v-if="showPaginate" aria-label="...">
                         <ul class="pagination">
 
                             <li class="page-item"
@@ -103,47 +108,56 @@ export default {
 
             paginate: {
                 current: null,
-                last: null,
-                // prev: null,
-                // next: null
+                last: null
             },
+            showPaginate: false
 
-            // isActive: false
+
         };
     },
     methods: {
         getApi(page) {
             this.posts = null;
-            Axios.get(this.apiUrl + "?page=" + page)
+            axios.get(this.apiUrl + "?page=" + page)
                 .then(resp => {
                 this.posts = resp.data.posts.data;
                 this.paginate = {
                     current: resp.data.posts.current_page,
-                    last: resp.data.posts.last_page,
-                    // prev: resp.data.prev_page_url,
-                    // next: resp.data.next_page_url,
+                    last: resp.data.posts.last_page
                 }
 
+                this.showPaginate = true;
                 this.categories = resp.data.categories;
                 this.tags = resp.data.tags;
 
                 console.log('sono io', resp.data);
-                // console.log(this.paginate.prev);
-                // console.log(this.paginate.next);
             });
         },
 
         searchPostsByCategory(slug_category){
+
+            this.showPaginate = false;
             console.log(slug_category);
+            axios.get(this.apiUrl + '/post-category/' + slug_category)
+            .then(resp => {
+                this.posts = resp.data.posts;
+                console.log(resp.data);
+            })
         },
         searchPostsByTag(slug_tag){
+
+            this.showPaginate = false;
             console.log(slug_tag);
+            axios.get(this.apiUrl + '/post-tag/' + slug_tag)
+            .then(resp => {
+                this.posts = resp.data.posts;
+                console.log(resp.data);
+            })
         }
     },
     mounted() {
         this.getApi(1);
-    },
-
+    }
 }
 </script>
 
@@ -152,8 +166,8 @@ export default {
     height: 700px;
 
     .posts-list{
-        height: 100px;
-        overflow-y: scroll;
+        height: 527px;
+        overflow-y: auto;
     }
 }
 </style>

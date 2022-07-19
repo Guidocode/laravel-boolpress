@@ -1972,11 +1972,9 @@ __webpack_require__.r(__webpack_exports__);
       tags: [],
       paginate: {
         current: null,
-        last: null // prev: null,
-        // next: null
-
-      } // isActive: false
-
+        last: null
+      },
+      showPaginate: false
     };
   },
   methods: {
@@ -1984,25 +1982,37 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.posts = null;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(this.apiUrl + "?page=" + page).then(function (resp) {
+      axios.get(this.apiUrl + "?page=" + page).then(function (resp) {
         _this.posts = resp.data.posts.data;
         _this.paginate = {
           current: resp.data.posts.current_page,
-          last: resp.data.posts.last_page // prev: resp.data.prev_page_url,
-          // next: resp.data.next_page_url,
-
+          last: resp.data.posts.last_page
         };
+        _this.showPaginate = true;
         _this.categories = resp.data.categories;
         _this.tags = resp.data.tags;
-        console.log('sono io', resp.data); // console.log(this.paginate.prev);
-        // console.log(this.paginate.next);
+        console.log('sono io', resp.data);
       });
     },
     searchPostsByCategory: function searchPostsByCategory(slug_category) {
+      var _this2 = this;
+
+      this.showPaginate = false;
       console.log(slug_category);
+      axios.get(this.apiUrl + '/post-category/' + slug_category).then(function (resp) {
+        _this2.posts = resp.data.posts;
+        console.log(resp.data);
+      });
     },
     searchPostsByTag: function searchPostsByTag(slug_tag) {
+      var _this3 = this;
+
+      this.showPaginate = false;
       console.log(slug_tag);
+      axios.get(this.apiUrl + '/post-tag/' + slug_tag).then(function (resp) {
+        _this3.posts = resp.data.posts;
+        console.log(resp.data);
+      });
     }
   },
   mounted: function mounted() {
@@ -2075,13 +2085,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get(this.apiUrl + '/' + this.$route.params.slug).then(function (resp) {
-        _this.post = {
-          title: resp.data.title,
-          image: resp.data.image,
-          description: resp.data.description,
-          category: resp.data.category,
-          tags: resp.data.tags
-        };
+        _this.post = resp.data;
         console.log(_this.post);
       });
     }
@@ -2144,9 +2148,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-
+// import { computed } from 'vue'
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PostItem',
   props: {
@@ -2202,7 +2204,9 @@ var render = function render() {
 
   return _c("div", {
     staticClass: "global"
-  }, [_c("HeaderComp"), _vm._v(" "), _c("main", [_c("router-view")], 1), _vm._v(" "), _c("FooterComp")], 1);
+  }, [_c("HeaderComp"), _vm._v(" "), _c("main", {
+    staticClass: "d-flex flex-column justify-content-between"
+  }, [_c("router-view")], 1), _vm._v(" "), _c("FooterComp")], 1);
 };
 
 var staticRenderFns = [];
@@ -2266,17 +2270,17 @@ var render = function render() {
       searchPostsByTag: _vm.searchPostsByTag
     }
   }), _vm._v(" "), _c("div", {
-    staticClass: "col-8 d-flex flex-column justify-content-between h-100"
-  }, [_c("div", {
-    staticClass: "tab-content",
-    staticStyle: {
-      height: "60%",
-      "overflow-y": "scroll"
-    },
+    staticClass: "col-8"
+  }, [_c("h2", {
+    staticClass: "title-content text-dark"
+  }, [_vm._v("Posts")]), _vm._v(" "), _c("div", {
+    staticClass: "tab-content posts-list mb-3",
     attrs: {
-      id: "nav-tabContent posts-list"
+      id: "nav-tabContent"
     }
-  }, [_c("div", {
+  }, [_vm.posts === [] || _vm.posts === null ? _c("div", [_c("h1", {
+    staticClass: "text-danger"
+  }, [_vm._v("Nessun post presente")])]) : _c("div", {
     staticClass: "tab-pane fade show active",
     attrs: {
       id: "list-home",
@@ -2285,37 +2289,14 @@ var render = function render() {
     }
   }, [_c("div", {
     staticClass: "list-group mb-3"
-  }, [_c("h2", {
-    staticClass: "title-content text-dark"
-  }, [_vm._v("Posts")]), _vm._v(" "), _vm._l(_vm.posts, function (post) {
+  }, _vm._l(_vm.posts, function (post) {
     return _c("PostItem", {
       key: post.id,
       attrs: {
         post: post
       }
     });
-  })], 2)]), _vm._v(" "), _c("div", {
-    staticClass: "tab-pane fade",
-    attrs: {
-      id: "list-profile",
-      role: "tabpanel",
-      "aria-labelledby": "list-profile-list"
-    }
-  }, [_vm._v("...")]), _vm._v(" "), _c("div", {
-    staticClass: "tab-pane fade",
-    attrs: {
-      id: "list-messages",
-      role: "tabpanel",
-      "aria-labelledby": "list-messages-list"
-    }
-  }, [_vm._v("...")]), _vm._v(" "), _c("div", {
-    staticClass: "tab-pane fade",
-    attrs: {
-      id: "list-settings",
-      role: "tabpanel",
-      "aria-labelledby": "list-settings-list"
-    }
-  }, [_vm._v("...")])]), _vm._v(" "), _c("nav", {
+  }), 1)])]), _vm._v(" "), _vm.showPaginate ? _c("nav", {
     attrs: {
       "aria-label": "..."
     }
@@ -2365,7 +2346,7 @@ var render = function render() {
       href: "#",
       disabled: _vm.paginate.current === _vm.paginate.last
     }
-  }, [_vm._v("Avanti")])])], 2)])])], 1)])]);
+  }, [_vm._v("Avanti")])])], 2)]) : _vm._e()])], 1)])]);
 };
 
 var staticRenderFns = [];
@@ -2643,9 +2624,9 @@ var render = function render() {
         }
       }
     }
-  }, [_vm._v("Vedi dettagli")]), _vm._v(" "), _c("br"), _vm._v("\n                " + _vm._s(_vm.post.title) + " "), _c("br"), _vm._v(" "), _c("small", {
+  }, [_vm._v("Vedi dettagli")]), _vm._v(" "), _c("br"), _vm._v("\n                " + _vm._s(_vm.post.title) + " "), _c("br"), _vm._v(" "), _vm.post.category ? _c("small", {
     staticClass: "badge bg-info text-dark mr-2"
-  }, [_vm._v("\n                    " + _vm._s(_vm.post.category.name) + "\n                ")]), _vm._v(" "), _vm._l(_vm.post.tags, function (tag) {
+  }, [_vm._v("\n                    " + _vm._s(_vm.post.category.name) + "\n                ")]) : _vm._e(), _vm._v(" "), _vm._l(_vm.post.tags, function (tag) {
     return _c("small", {
       key: tag.id,
       staticClass: "badge badge-pill badge-secondary mr-1"
@@ -2745,7 +2726,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, ".global main {\n  height: calc(100vh - 56px - 50px);\n  overflow-y: scroll;\n}", ""]);
+exports.push([module.i, ".global main {\n  height: calc(100vh - 56px - 50px);\n  overflow-y: auto;\n}", ""]);
 
 // exports
 
@@ -2764,7 +2745,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".content[data-v-02893632] {\n  height: 700px;\n}\n.content .posts-list[data-v-02893632] {\n  height: 100px;\n  overflow-y: scroll;\n}", ""]);
+exports.push([module.i, ".content[data-v-02893632] {\n  height: 700px;\n}\n.content .posts-list[data-v-02893632] {\n  height: 527px;\n  overflow-y: auto;\n}", ""]);
 
 // exports
 

@@ -4,7 +4,7 @@
         <HeaderComp />
 
 
-        <main>
+        <main class="d-flex flex-column justify-content-between">
             <router-view></router-view>
         </main>
 
@@ -35,7 +35,7 @@ export default {
 
     main{
         height: calc(100vh - 56px - 50px);
-        overflow-y: scroll;
+        overflow-y: auto;
     }
 }
 

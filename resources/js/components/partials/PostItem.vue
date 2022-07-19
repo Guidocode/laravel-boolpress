@@ -6,7 +6,7 @@
             <h5 class="mb-1">
                 <router-link class="btn btn-warning font-italic mb-1 py-0 px-1" :to="{name: 'show', params: {slug: post.slug}}">Vedi dettagli</router-link> <br>
                 {{post.title}} <br>
-                <small class="badge bg-info text-dark mr-2">
+                <small v-if="post.category" class="badge bg-info text-dark mr-2">
                     {{ post.category.name }}
                 </small>
 
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { computed } from 'vue'
+// import { computed } from 'vue'
 export default {
     name: 'PostItem',
 
