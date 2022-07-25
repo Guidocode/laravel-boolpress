@@ -9,6 +9,7 @@ import BlogComp from './components/pages/BlogComp';
 import AboutComp from './components/pages/AboutComp';
 import ContactsComp from './components/pages/ContactsComp';
 import PostShow from './components/pages/PostShow';
+import Error404 from './components/pages/Error404'
 
 const router = new VueRouter({
 
@@ -41,6 +42,10 @@ const router = new VueRouter({
             path: '/dettaglio-post/:slug',
             name: 'show',
             component: PostShow
+        },
+        {
+            path: '*',
+            component: Error404
         },
     ]
 });

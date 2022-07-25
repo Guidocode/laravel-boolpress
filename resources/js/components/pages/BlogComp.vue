@@ -145,7 +145,7 @@ export default {
             .then(resp => {
                 this.posts = resp.data.posts;
                 this.searchType = resp.data.name
-                console.log(resp.data.posts);
+                console.log(resp.data);
             })
         },
         searchPostsByTag(slug_tag){

@@ -5,7 +5,7 @@
         <!-- Sidebar categories -->
         <h4 class="mb-3">Ricerca per categorie</h4>
         <div class="list-group mb-5" id="list-tab" role="tablist">
-            <a class="list-group-item list-group-item-action " data-toggle="list" role="tab" aria-controls="home"
+            <a class="list-group-item list-group-item-action" data-toggle="list" role="tab" aria-controls="home"
              v-for="category in categories" :key="category.id"
              @click="$emit('searchPostsByCategory', category.slug)">
                 {{category.name}}
@@ -40,6 +40,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+a{
+    cursor: pointer;
+}
 </style>
