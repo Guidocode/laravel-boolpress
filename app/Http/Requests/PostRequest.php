@@ -27,7 +27,7 @@ class PostRequest extends FormRequest
             //
 
             'title' => 'required|max:100|min:3',
-            'image' => 'required|max:255|min:10',
+            'image' => 'nullable|image|max:32000',
             'description' => 'required|min:10',
         ];
     }
@@ -38,9 +38,8 @@ class PostRequest extends FormRequest
             'title.required' => 'Campo obbligatorio',
             'title.max' => 'Può contenere massimo :max caratteri',
             'title.min' => 'Deve contenere minimo :min caratteri',
-            'image.required' => 'Campo obbligatorio',
-            'image.max' => 'Può contenere massimo :max caratteri',
-            'image.min' => 'Deve contenere minimo :min caratteri',
+            'image.image' => 'Si possono caricare solo file formato immagine',
+            'image.max' => 'File immagine troppo grande',
             'description.required' => 'Campo obbligatorio',
             'description.min' => 'Deve contenere minimo :min caratteri',
         ];

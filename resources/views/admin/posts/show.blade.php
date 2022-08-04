@@ -6,7 +6,9 @@
 
         <div class="card" style="width: 25rem;">
 
-            <img class="img-fluid" src="{{ $post->image }}" alt="{{ $post->title }}">
+            @if ($post->image)
+                <img class="img-fluid" src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->original_name_image }}">
+            @endif
 
             <div class="card-body">
 

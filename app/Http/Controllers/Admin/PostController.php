@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
 use App\Tag;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -58,6 +59,12 @@ class PostController extends Controller
         // arrivano i dati da create
 
         $data = $request->all();
+
+        if (array_key_exists('image', $data)) {
+            $data['original_name_image'] = $request->file('image')->getClientOriginalName();
+            $data['image'] = Storage::put('uploads', $data['image']);
+        }
+
         $new_post = new Post();
 
         $data['slug'] = Post::genereteSlug($data['title']);
@@ -128,6 +135,18 @@ class PostController extends Controller
         $post = Post::find($id);
 
         $data = $request->all();
+
+        if(array_key_exists('image', $data)){
+
+            // se l'immagine è già presente vuol dire che va sostituita
+            // quindi se presente la elimino
+            if($post->image){
+                Storage::delete($post->image);
+            }
+
+            $data['original_name_image'] = $request->file('image')->getClientOriginalName();
+            $data['image'] = Storage::put('uploads', $data['image']);
+        }
 
         // cambio lo slug solo se modifico il titolo
         if($data['title'] != $post->title){

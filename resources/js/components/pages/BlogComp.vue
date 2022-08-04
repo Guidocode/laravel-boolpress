@@ -42,7 +42,6 @@
 
                             </div>
 
-                            <!-- non funziona!!! -->
                             <div v-else>
                                 <h6 class="text-danger">Nessun post presente</h6>
                             </div>
@@ -76,6 +75,13 @@
 
                         </ul>
                     </nav>
+
+                    <div v-else>
+                        <button class="btn btn-primary"
+                         @click="getApi(1)">
+                            Tutti i post
+                        </button>
+                    </div>
                     <!-- /pagination -->
 
                 </div>

@@ -2365,7 +2365,14 @@ var render = function render() {
       href: "#",
       disabled: _vm.paginate.current === _vm.paginate.last
     }
-  }, [_vm._v("Avanti")])])], 2)]) : _vm._e()])], 1)])]);
+  }, [_vm._v("Avanti")])])], 2)]) : _c("div", [_c("button", {
+    staticClass: "btn btn-primary",
+    on: {
+      click: function click($event) {
+        return _vm.getApi(1);
+      }
+    }
+  }, [_vm._v("\n                            Tutti i post\n                        ")])])])], 1)])]);
 };
 
 var staticRenderFns = [];
@@ -2689,9 +2696,12 @@ var render = function render() {
         params: {
           slug: _vm.post.slug
         }
-      }
+      },
+      "data-toggle": "tooltip",
+      "data-placement": "right",
+      title: "Vedi dettaglio post"
     }
-  }, [_vm._v("Vedi dettagli")]), _vm._v(" "), _c("br"), _vm._v("\n                " + _vm._s(_vm.post.title) + " "), _c("br"), _vm._v(" "), _vm.post.category ? _c("small", {
+  }, [_vm._v("\n                    Vedi dettagli\n                ")]), _vm._v(" "), _c("br"), _vm._v("\n                " + _vm._s(_vm.post.title) + " "), _c("br"), _vm._v(" "), _vm.post.category ? _c("small", {
     staticClass: "badge bg-info text-dark mr-2"
   }, [_vm._v("\n                    " + _vm._s(_vm.post.category.name) + "\n                ")]) : _vm._e(), _vm._v(" "), _vm._l(_vm.post.tags, function (tag) {
     return _c("small", {

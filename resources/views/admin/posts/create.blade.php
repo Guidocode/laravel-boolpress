@@ -8,7 +8,7 @@
 
                 <h1>Creo il post</h1>
 
-                <form action="{{ route('admin.posts.store') }}" method="POST">
+                <form action="{{ route('admin.posts.store') }}" method="POST" id="form" enctype="multipart/form-data">
                     @csrf
 
                     <div class="mb-3">
@@ -23,10 +23,10 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="image" class="form-label">Url immagine</label>
-                        <input type="text" id="image" name="image" placeholder="URL immagine"
+                        <label for="image" class="form-label">Immagine</label>
+                        <input type="file" id="image" name="image"
                         value="{{ old('image') }}"
-                        class="form-control @error('image') is-invalid @enderror" required>
+                        class="form-control @error('image') is-invalid @enderror">
                         @error('image')
                             <p class="invalid-feedback">{{ $message }}</p>
                         @enderror

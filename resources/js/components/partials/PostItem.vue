@@ -4,7 +4,10 @@
         <div class="d-flex w-100 justify-content-between">
 
             <h5 class="mb-1">
-                <router-link class="btn btn-warning font-italic mb-1 py-0 px-1" :to="{name: 'show', params: {slug: post.slug}}">Vedi dettagli</router-link> <br>
+                <router-link class="btn btn-warning font-italic mb-1 py-0 px-1" :to="{name: 'show', params: {slug: post.slug}}"
+                data-toggle="tooltip" data-placement="right" title="Vedi dettaglio post">
+                    Vedi dettagli
+                </router-link> <br>
                 {{post.title}} <br>
                 <small v-if="post.category" class="badge bg-info text-dark mr-2">
                     {{ post.category.name }}

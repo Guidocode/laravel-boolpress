@@ -31,6 +31,12 @@ class PageController extends Controller
 
         $post = Post::where('slug', $slug)->with(['category', 'tags'])->first();
 
+        if($post->image){
+            $post->image = url("storage/" . $post->image );
+        }else{
+            $post->image = url("storage/uploads/placeholder-image.png");
+        }
+
         return response()->json($post);
 
     }

@@ -8,7 +8,7 @@
 
                 <h1>Modifico il post: {{ $post->title }}</h1>
 
-                <form action="{{ route('admin.posts.update', $post, $post->category ? $post->category->id : '') }}" method="POST">
+                <form action="{{ route('admin.posts.update', $post, $post->category ? $post->category->id : '') }}" method="POST" id="form" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
@@ -22,11 +22,15 @@
                         @enderror
                     </div>
 
+
                     <div class="mb-3">
-                        <label for="image" class="form-label">Url immagine</label>
-                        <input type="text" id="image" name="image" placeholder="URL immagine"
-                        value="{{ old('image', $post->image) }}"
-                        class="form-control @error('image') is-invalid @enderror" required>
+                        @if ($post->image)
+                            <img id='output-image' width="150" src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->original_name_image }}">
+                        @endif
+                        <label for="image" class="form-label">Immagine</label>
+                        <input type="file" id="image" name="image"
+                        onchange="showImage(event)"
+                        class="form-control @error('image') is-invalid @enderror">
                         @error('image')
                             <p class="invalid-feedback">{{ $message }}</p>
                         @enderror
@@ -74,6 +78,14 @@
                 </form>
 
             </div>
+
+            <script>
+                var showImage = function(event) {
+                    const image = document.getElementById('output-image');
+                    image.src = URL.createObjectURL(event.target.files[0]);
+                };
+            </script>
+
         </div>
     </div>
 
