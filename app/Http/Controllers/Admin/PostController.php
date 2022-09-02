@@ -98,6 +98,12 @@ class PostController extends Controller
         //prendo tutte le categorie e le passo alla show
         $categories = Category::all();
 
+        if($post->image){
+            $post->image = url("storage/" . $post->image );
+        }else{
+            $post->image = url("storage/uploads/placeholder-image.png");
+        }
+
         return view('admin.posts.show', compact('post', 'categories'));
     }
 
